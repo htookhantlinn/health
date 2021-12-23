@@ -90,8 +90,42 @@
 <script src="{{asset('plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
 <script src="{{asset('plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
 
+
 <script src=" {{asset('/js/script.js')}} "></script>
 <script src=" {{asset('/js/modal.js')}} "></script>
+<script src=" {{asset('/js/datatable.js')}} "></script>
+
+{{-- Datatable js --}}
+{{-- <script type="text/javascript">
+    $(function() {
+        var table = $('.item-data-table').DataTable({
+            processing: true
+            , serverSide: true
+            , ajax: "{{ route('items.index') }}"
+, columns: [{
+data: 'DT_RowIndex'
+, name: 'DT_RowIndex'
+}
+, {
+data: 'name'
+, name: 'name'
+}
+, {
+data: 'created_at'
+, name: 'created_at'
+}
+, {
+data: 'action'
+, name: 'action'
+, orderable: false
+, searchable: false
+}
+, ]
+});
+});
+
+</script> --}}
+
 <script>
     var Toast = Swal.mixin({
         toast: true

@@ -89,3 +89,68 @@ function deleteItem(id) {
     $('#deleteModal').modal('hide'); // now close modal
 }
 
+// $('#createRecord').on('click', function () {
+//     $('#itemFormModal').modal('show');
+// });
+
+// $('#sample_form').on('submit ', function (event) {
+//     event.preventDefault();
+//     var action_url = '';
+//     if ($('#action').val() == 'Add') {
+//         action_url = "/admin/items/"
+//         $.ajax({
+//             url: action_url,
+//             method: "POST",
+//             data: $(this).serialize(),
+//             dataType: "json",
+//             success: function (data) {
+//                 var html = '';
+//                 if (data.errors) {
+//                     html = " <div class=' alert alert-danger'> ";
+//                     for (var count = 0; count < data.errors.length; count++) {
+//                         html += '<p>' + data.errors[count] + '</p>';
+//                     }
+//                     html += "</div>";
+//                 }
+//                 if (data.success) {
+//                     html = " <div class=' alert alert-success'> " + data.success + "</div>";
+//                     $('#sample_form')[0].reset();
+//                     $('#item-data-table').DataTable().ajax.reload();
+//                 }
+//                 $('#form_result').html(html);
+//             }
+//         });
+//     }
+// });
+
+// var item_id;
+
+// $(document).on('click', '.delete', function () {
+//     item_id = $(this).attr('id');
+//     $('#confirmModal').modal('show');
+// });
+
+// $('#ok_button').click(function () {
+//     $.ajaxSetup({
+//         headers: {
+//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//         }
+//     });
+//     $.ajax({
+//         url: "/admin/items/" + item_id,
+//         method: "delete",
+//         beforeSend: function () {
+//             $('#ok_button').text('Deleting...');
+//         },
+//         success: function (data) {
+//             setTimeout(function () {
+//                 $('#confirmModal').modal('hide');
+//                 table = $('#item-data-table').DataTable();
+//                 alert('Data Deleted');
+//                 $('#ok_button').text('OK');
+
+//             }, 2000);
+
+//         }
+//     })
+// });

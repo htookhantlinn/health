@@ -4,3 +4,5 @@
 @yield('content')
 <!-- /.content-wrapper -->
 @include('admin-layouts.footer')
+
+@yield('footer-scripts')

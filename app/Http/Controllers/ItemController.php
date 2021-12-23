@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Item;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use DataTables;
+
 
 class ItemController extends Controller
 {
@@ -12,11 +17,30 @@ class ItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->ajax()) {
+            $data = Item::latest()->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($data) {
+                    $btn = '<a  name="edit" id="' . $data->id . '" class=" edit btn btn-outline-warning btn-sm">
+                    <i class="fas fa-edit"></i></a>';
+                    $btn .= ' &nbsp;&nbsp;&nbsp;&nbsp; <a  name="delete" id="' . $data->id . '" class=" delete btn btn-outline-danger btn-sm"><i class="fa fa-trash" ></i>
+                    </a>';
+                    return $btn;
+                })->editColumn('created_at', function ($data) {
+                    $formatedDate = Carbon::createFromFormat('Y-m-d H:i:s', $data->created_at)->format('d-M-Y');
+                    return $formatedDate;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+
+        $categories = Category::all();
         //
-        $items = Item::all();
-        return view('admin.items.index', ['items' => $items]);
+        return view('admin.items.index', ['categories' => $categories]);
     }
 
     /**
@@ -38,6 +62,13 @@ class ItemController extends Controller
     public function store(Request $request)
     {
         //
+        $item = new Item();
+        $item->name = $request->name;
+        $item->description = $request->description;
+        $item->quantity = 100;
+        $item->category_id = 2;
+        $item->save();
+        return response()->json(['success' => 'Data Added Successfully.']);
     }
 
     /**
@@ -82,13 +113,9 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-        //
-        $item = Item::find($id);
-        $item->delete();
-        return response()->json([
-            'success' => 'Record deleted successfully!',
-            'items' => Item::select('id', 'name', 'created_at')->get(),
-        ]);
+
+        $data = Item::findOrFail($id);
+        $data->delete();
     }
 
     // public function delete($id)
