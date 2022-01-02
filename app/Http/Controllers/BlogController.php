@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Blog;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BlogController extends Controller
 {
@@ -59,6 +60,7 @@ class BlogController extends Controller
         $blog->title = $request->title;
         $blog->description = $request->description;
         $blog->category_id = $request->category_id;
+        $blog->user_id = auth()->id();
         $blog->image = $imageName;
 
 
@@ -112,11 +114,16 @@ class BlogController extends Controller
      */
     public function destroy($id)
     {
+        $user = Auth::user();
         $blog = Blog::find($id);
-        $blog->delete();
-        return response()->json([
-            'success' => 'Record deleted successfully!',
-            'blogs' => Blog::all(),
-        ]);
+        if ($blog->user->id === $user->id) {
+            $blog->delete();
+            return response()->json([
+                'success' => 'Record deleted successfully!',
+                'blogs' => Blog::all(),
+            ]);
+        } else {
+            echo 'This is error';
+        }
     }
 }

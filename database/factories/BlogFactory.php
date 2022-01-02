@@ -18,6 +18,7 @@ class BlogFactory extends Factory
             'title' => ucwords($this->faker->word),
             'category_id' => rand(1, 10),
             'description' => $this->faker->paragraph,
+            'user_id' => rand(1, 10),
             'image' => 'blog_5.jpg',
         ];
     }

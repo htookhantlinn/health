@@ -2,10 +2,27 @@
 
 @section('content')
 <div class="content-wrapper">
-
-    <div class="container mt-3">
+    <form action="{{route('doctors.search')}}" method="post" autocomplete="off">
+        @csrf
         <div class="row p-4">
-            @foreach ($doctors as $doctor)
+            <div class="col-md-8 ">
+                <select name="field" id="field" class="form-control">
+                    @foreach ($fields as $x)
+                    <option value="{{$x->id}}">{{$x->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-4">
+                <input type="submit" value="Search" class="btn btn-outline-success w-50">
+            </div>
+        </div>
+    </form>
+
+    <div class="container ">
+        <div class="row p-3">
+
+
+            @forelse ($doctors as $doctor)
             <div class="col-md-4">
                 <!-- Widget: user widget style 1 -->
                 <div class="card card-widget widget-user shadow">
@@ -58,13 +75,16 @@
                 </div>
                 <!-- /.widget-user -->
             </div>
-            @endforeach
+            @empty
+            <h1>No Records</h1>
+            @endforelse
 
 
         </div>
-        <div class="row ">
-            <div class="col-md-9"></div>
-            <div class="col-md-3">{{$doctors->links()}}</div>
+        <div class="row  mb-3 p-3">
+            <div class="col-md-3"></div>
+            <div class="col-md-6 d-flex justify-content-center align-items-center">{{$doctors->links()}}</div>
+            <div class="col-md-3"></div>
 
         </div>
     </div>

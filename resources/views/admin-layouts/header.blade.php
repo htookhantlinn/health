@@ -232,7 +232,14 @@
                         <img src="{{asset('dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
+                        <a class="d-block " href="{{ route('logout') }}" onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();"> {{ Auth::user()->name }}
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+
+
                     </div>
                 </div>
                 <div class="form-inline">
@@ -294,7 +301,7 @@
 
 
 
-                        <li class="nav-item   {{  request()->routeIs('doctors.index') || request()->routeIs('doctors.create') ? 'menu-open ' : '' }}">
+                        <li class="nav-item   {{ request()->routeIs('doctors.search') || request()->routeIs('doctors.index') || request()->routeIs('doctors.create') ? 'menu-open ' : '' }}">
                             <a href="#" class="nav-link {{  request()->routeIs('doctors.index') || request()->routeIs('doctors.create') ? 'active ' : '' }}">
                                 <i class="fa fa-user-md" aria-hidden="true"></i>
                                 <p>
@@ -317,8 +324,6 @@
                                         <p>Insert</p>
                                     </a>
                                 </li>
-
-
 
 
                             </ul>
@@ -377,10 +382,8 @@
 
                             </ul>
                         </li>
-
-
-
                     </ul>
+
                 </nav>
                 <!-- /.sidebar-menu -->
             </div>

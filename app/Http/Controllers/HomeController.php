@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+
+
     public function index()
     {
         $latestBlogs = Blog::latest()->paginate(3);
@@ -55,5 +57,14 @@ class HomeController extends Controller
     {
         $items = Item::All();
         return view('items.index', ['items' => $items]);
+    }
+
+    public function blogsByCategory($id)
+    {
+        $blogs = Blog::where('category_id', '=', $id)->paginate(6);
+
+        $categories = Category::latest()->paginate(5);
+        $latestBlogs = Blog::latest()->paginate(3);
+        return view('health.blogs', ['blogs' => $blogs,  'categories' => $categories, 'latestBlogs' => $latestBlogs]);
     }
 }

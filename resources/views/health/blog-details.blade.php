@@ -40,10 +40,10 @@
                     <h2 class="post-title h1">{{$blog->title}}</h2>
                     <div class="post-content">
                         <p>
-                            {{$blog->description}}
+                            {!!$blog->description!!}
                         </p>
                         <p>
-                            {{$blog->description}}
+                            {!!$blog->description!!}
                         </p>
 
                     </div>
@@ -96,7 +96,7 @@
                         <h3 class="sidebar-title">Categories</h3>
                         <ul class="categories">
                             @foreach ($categories as $category)
-                            <li><a href="#">{{$category->name}} <span>{{rand(10,20)}}</span></a></li>
+                            <li><a href="{{route('health.blogsByCategory',[$category->id])}}">{{$category->name}} <span>{{count($category->blogs)}}</span></a></li>
                             @endforeach
                         </ul>
                     </div>

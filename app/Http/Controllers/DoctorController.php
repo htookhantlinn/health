@@ -10,6 +10,16 @@ use function PHPUnit\Framework\isNull;
 
 class DoctorController extends Controller
 {
+
+    public function advancedSearch(Request $request)
+    {
+        return view('admin.doctors.advancedSearch');
+    }
+    public function __construct()
+    {
+        // $this->middleware('auth')->except(['index', 'show']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,8 +29,10 @@ class DoctorController extends Controller
     {
         //
         $doctors = Doctor::latest()->paginate(6);
+        $fields = Field::all();
         return view('admin.doctors.index', [
             'doctors' => $doctors,
+            'fields' => $fields,
         ]);
     }
 
@@ -153,5 +165,13 @@ class DoctorController extends Controller
         Doctor::find($id)->delete();
 
         return back()->with('delete-info', 'Successfully Deleted.');
+    }
+
+    public function search(Request $request)
+    {
+        $field = Field::find($request->field);
+        $fields = Field::all();
+        $doctors = $field->doctors;
+        return view('admin.doctors.search', ['doctors' => $doctors, 'fields' => $fields, 'selectedFieldId' => $request->field]);
     }
 }

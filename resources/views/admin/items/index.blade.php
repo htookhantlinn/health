@@ -17,8 +17,10 @@
                 <tr>
                     <th width="50">No</th>
                     <th>Name</th>
-                    <th>Date</th>
                     <th>Quantity</th>
+                    <th>Category</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -95,6 +97,112 @@
             </div>
         </div>
 
+        {{-- show info modal --}}
+        <div class="modal fade" id="showInfoModal" tabindex="-1">
+            <div class="modal-dialog  modal-dialog-centered ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <span id="form_result"></span>
+                            <form method="post" id="sample_form" class="form-horizontal" autocomplete="off">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"> Item Name : </label>
+                                    <div>
+                                        <input type="text" name="info_itemName" id="info_itemName" class="form-control" disabled />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Description: </label>
+                                    <div>
+                                        <input class="form-control" type="text" name="info_description" id="info_description" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Category </label>
+                                    <div>
+                                        <input class="form-control" type="text" name="info_category" id="info_category" disabled>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Quantity </label>
+                                    <div>
+                                        <input class="form-control" type="text" name="info_quantity" id="info_quantity" disabled>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        {{-- edit modal --}}
+        <div class="modal fade" id="editModal" tabindex="-1" data-backdrop="static">
+            <div class="modal-dialog  modal-dialog-centered ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <span id="edit_form_result"></span>
+                            <form method="post" id="edit_form" class="form-horizontal" autocomplete="off">
+                                @csrf
+                                {{ method_field('PUT') }}
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"> Item Name : </label>
+                                    <div>
+                                        <input type="text" name="edit_itemName" id="edit_itemName" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Description: </label>
+                                    <div>
+                                        <textarea class="form-control" name="edit_description" id="edit_description" rows="5">
+                                        </textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Category </label>
+                                    <div>
+                                        <select name="edit_category" id="edit_category" class="form-control">
+                                            @foreach ($categories as $x)
+                                            <option value="{{$x->id}}">{{$x->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">Quantity </label>
+                                    <div>
+                                        <input class="form-control" type="number" name="edit_quantity" id="edit_quantity">
+                                    </div>
+                                </div><br />
+                                <div class="form-group" align="center">
+                                    <input type="hidden" name="action" id="action" value="edit" />
+                                    <input type="hidden" name="hidden_id" id="hidden_id" />
+                                    <input type="submit" name="action_button" id="action_button" class="btn btn-success" value="Update" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 </div>
@@ -122,7 +230,7 @@
         event.preventDefault();
         var action_url = '';
         if ($('#action').val() == 'Add') {
-            action_url = "/admin/items/"
+            action_url = "{{route('items.store')}}";
             $.ajax({
                 url: action_url
                 , method: "POST"
@@ -147,12 +255,100 @@
             });
         }
     });
+    $('#edit_form').on('submit ', function(event) {
+        event.preventDefault();
+        var action_url = '';
+        action_url = "/admin/items/" + item_id + "";
+        $.ajax({
+            url: action_url
+            , method: "PUT"
+            , data: $(this).serialize()
+            , dataType: "json"
+            , success: function(data) {
+                console.log(data)
+                var html = '';
+                console.log(data.errors)
+                if (data.errors) {
+                    html = " <div class=' alert alert-danger'> ";
+                    for (var count = 0; count < data.errors.length; count++) {
+                        html += '<p>' + data.errors[count] + '</p>';
+                    }
+                    html += "</div>";
+                }
+                if (data.success) {
+                    $('#editModal').modal('hide');
+                    $('#edit_form')[0].reset();
+                    $('.item-data-table').DataTable().ajax.reload();
+                }
+                $('#edit_form_result').html(html);
+            }
+        });
+    });
+
+    $('.close').on('click', function() {
+        $('#edit_form_result').html(' ');
+    });
 
     var item_id;
     // Delete
     $(document).on('click', '.delete', function() {
         item_id = $(this).attr('id');
         $('#confirmModal').modal('show');
+    });
+    $(document).on('click', '.info', function() {
+        item_id = $(this).attr('id');
+        console.log(item_id)
+        event.preventDefault();
+        var action_url = '';
+        action_url = "/admin/items/" + item_id + "";
+        $.ajax({
+            url: action_url
+            , method: "GET"
+            , data: $(this).serialize()
+            , dataType: "json"
+            , success: function(data) {
+                $item = data['item']
+                $('#info_itemName').val($item['name']);
+                $('#info_description').val($item['description']);
+                $('#info_category').val(data['category']);
+                $('#info_quantity').val($item['quantity']);
+            }
+        });
+        $('#showInfoModal').modal('show');
+    });
+
+    // edit button on click
+    $(document).on('click', '.edit', function() {
+        item_id = $(this).attr('id');
+        // console.log(item_id)
+        event.preventDefault();
+        var action_url = '';
+        action_url = "/admin/items/" + item_id + "";
+        $.ajax({
+            url: action_url
+            , method: "GET"
+            , data: $(this).serialize()
+            , dataType: "json"
+            , success: function(data) {
+
+                var select = document.getElementById('edit_category');
+                // console.log(typeof(data['category_id']))
+                // console.log(data['category_id'])
+                // console.log(select)
+                const options = Array.from(select.options);
+                options.forEach((option, i) => {
+                    // console.log(typeof(+option.value))
+                    if (+option.value === data['category_id']) {
+                        select.selectedIndex = i;
+                    }
+                });
+                $item = data['item']
+                $('#edit_itemName').val($item['name']);
+                $('#edit_description').val($item['description']);
+                $('#edit_quantity').val($item['quantity']);
+            }
+        });
+        $('#editModal').modal('show');
     });
 
     $('#ok_button').click(function() {
@@ -210,11 +406,19 @@
                     , name: 'name'
                 }
                 , {
-                    data: 'created_at'
-                    , name: 'created_at'
-                }, {
                     data: 'quantity'
                     , name: 'quantity'
+                }, {
+                    data: 'category_id'
+                    , name: 'category_id'
+                }
+                , {
+                    data: 'created_at'
+                    , name: 'created_at'
+                }
+                , {
+                    data: 'updated_at'
+                    , name: 'updated_at'
                 }
                 , {
                     data: 'action'

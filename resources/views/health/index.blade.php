@@ -112,7 +112,7 @@
                     </div>
                     <div class="body">
                         <h5 class="post-title"><a class="block-ellipsis-front-view" href="{{route('health.blog-details',[$blog->id])}}">
-                                {{$blog->description}}
+                                {!!$blog->description!!}
                             </a></h5>
                         <div class="site-info">
                             <div class="avatar mr-2">

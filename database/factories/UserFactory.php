@@ -16,11 +16,11 @@ class UserFactory extends Factory
     {
         return [
             //
-            'name' => ucwords($this->faker->word),
+            'name' => $this->faker->name,
             'email' => $this->faker->email(),
             'email_verified_at' => now(),
-            'password' => '$2a$12$Ujlf69qcZTCfvtcLMD5Ug.i8i82FH3fLHpKjVDHNtYjdTLnsiWtGC
-            ',
+            'mobile' => $this->faker->phoneNumber,
+            'password' => '$2a$12$Ujlf69qcZTCfvtcLMD5Ug.i8i82FH3fLHpKjVDHNtYjdTLnsiWtGC',
             'remember_token' => Str::random(10),
         ];
     }

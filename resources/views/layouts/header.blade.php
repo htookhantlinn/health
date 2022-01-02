@@ -9,7 +9,6 @@
     <meta name="copyright" content="MACode ID, https://macodeid.com/">
 
     <title>One Health - Medical Center HTML5 Template</title>
-
     {{-- <link rel="stylesheet" href="../assets/css/maicons.css"> --}}
 
     <link rel="stylesheet" href=" {{asset('/css/maicons.css')}} ">
@@ -17,10 +16,8 @@
     {{-- <link rel="stylesheet" href="../assets/css/bootstrap.css"> --}}
     <link rel="stylesheet" href=" {{asset('/css/bootstrap.css')}} ">
 
-
     {{-- <link rel="stylesheet" href="../assets/vendor/owl-carousel/css/owl.carousel.css"> --}}
     <link rel="stylesheet" href=" {{asset('/vendor/owl-carousel/css/owl.carousel.css')}} ">
-
 
     <link rel="stylesheet" href=" {{asset('/vendor/animate/animate.css')}} ">
     {{-- <link rel="stylesheet" href="../assets/vendor/animate/animate.css"> --}}
@@ -30,9 +27,6 @@
 
     {{-- custom css --}}
     <link rel="stylesheet" href=" {{asset('/css/style.css')}} ">
-
-
-
 
 </head>
 <body>
@@ -87,9 +81,11 @@
                         <li class="nav-item">
                             <a class="nav-link {{  request()->routeIs('health.about') ? 'active' : '' }}" href="{{route('health.about')}}">About Us</a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link {{  request()->routeIs('health.doctors') ? 'active' : '' }}" href="{{route('health.doctors')}}">Doctors</a>
                         </li>
+
                         <li class="nav-item {{  request()->routeIs('health.blogs') ? 'active' : '' }}">
                             <a class="nav-link" href="{{route('health.blogs')}}">News</a>
                         </li>

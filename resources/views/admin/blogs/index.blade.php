@@ -28,6 +28,7 @@
                     <th>No</th>
                     <th>Title</th>
                     <th>Date</th>
+                    <th>Created By</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -37,6 +38,7 @@
                     <td>{{$loop->iteration}}</td>
                     <td>{{$blog->title}}</td>
                     <td>{{date('d-M-Y', strtotime($blog->created_at));}}</td>
+                    <td>{{$blog->user->name}}</td>
                     <td>
                         <ul id="datatable-action">
                             <li>
@@ -46,7 +48,6 @@
                             </li>
                             <li> <a href="#"> <span> <i class="fas fa-edit "></i> </span>Edit</a></li>
 
-                            {{-- <li> <a href="#" onclick="confirmDeleteModal({{$blog->id}})"> <span> <i class="fa fa-trash"></i> </span>Delete</a></li> --}}
 
                             <li>
 
@@ -55,14 +56,7 @@
                                 </a>
 
 
-                                {{-- <form method="POST" action="{{route('blogs.destroy',[$blog->id])}}">
-                                {{ csrf_field() }}
-                                {{ method_field('DELETE') }}
 
-                                <button type="submit" class="btn btn-outline-danger " onclick=" return confirm('Are you sure to delete?') ">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                </button>
-                                </form> --}}
                             </li>
                         </ul>
 
@@ -78,6 +72,7 @@
                     <th>No</th>
                     <th>Title</th>
                     <th>Date</th>
+                    <th>Created By</th>
                     <th>Actions</th>
                 </tr>
             </tfoot>

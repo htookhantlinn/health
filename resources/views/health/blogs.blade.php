@@ -34,14 +34,14 @@
                             </div>
                             <div class="body">
                                 <h5 class="post-title"><a class="block-ellipsis-front-view" href="{{route('health.blog-details',[$blog->id])}}">
-                                        {{$blog->description}}
+                                        {!!$blog->description!!}
                                     </a></h5>
                                 <div class="site-info">
                                     <div class="avatar mr-2">
                                         <div class="avatar-img">
                                             <img src="/img/person/person_1.jpg" alt="">
                                         </div>
-                                        <span>Roger Adams</span>
+                                        <span>{{$blog->user->name}}</span>
                                     </div>
                                     <span class="mai-time"></span> {{$blog->created_at->diffForHumans()}}
                                 </div>
@@ -79,7 +79,7 @@
                         <ul class="categories">
 
                             @foreach ($categories as $category)
-                            <li><a href="#">{{$category->name}} <span>{{rand(10,20)}}</span></a></li>
+                            <li><a href="{{route('health.blogsByCategory',[$category->id])}}">{{$category->name}} <span>{{count($category->blogs)}}</span></a></li>
 
                             @endforeach </ul>
                     </div>
