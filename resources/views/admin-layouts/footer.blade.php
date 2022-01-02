@@ -95,36 +95,6 @@
 <script src=" {{asset('/js/modal.js')}} "></script>
 <script src=" {{asset('/js/datatable.js')}} "></script>
 
-{{-- Datatable js --}}
-{{-- <script type="text/javascript">
-    $(function() {
-        var table = $('.item-data-table').DataTable({
-            processing: true
-            , serverSide: true
-            , ajax: "{{ route('items.index') }}"
-, columns: [{
-data: 'DT_RowIndex'
-, name: 'DT_RowIndex'
-}
-, {
-data: 'name'
-, name: 'name'
-}
-, {
-data: 'created_at'
-, name: 'created_at'
-}
-, {
-data: 'action'
-, name: 'action'
-, orderable: false
-, searchable: false
-}
-, ]
-});
-});
-
-</script> --}}
 
 <script>
     var Toast = Swal.mixin({
@@ -163,6 +133,18 @@ data: 'action'
 
 </script>
 @endif
+
+@if (Session::has('permission-error-info
+'))
+<script>
+    Toast.fire({
+        icon: 'success'
+        , title: '{{Session::get("permission-error-info")}}'
+    });
+
+</script>
+@endif
+
 
 </body>
 

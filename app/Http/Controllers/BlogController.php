@@ -6,6 +6,7 @@ use App\Models\Blog;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class BlogController extends Controller
 {
@@ -118,12 +119,14 @@ class BlogController extends Controller
         $blog = Blog::find($id);
         if ($blog->user->id === $user->id) {
             $blog->delete();
+            // Session::put('delete-info', 'Record deleted successfully!');    // Set session variable
+
             return response()->json([
                 'success' => 'Record deleted successfully!',
                 'blogs' => Blog::all(),
             ]);
         } else {
-            echo 'This is error';
+            // Session::put('permission-error-info', "Yout don't have permission to delete.");    // Set session variable
         }
     }
 }
