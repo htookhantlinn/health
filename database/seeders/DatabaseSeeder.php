@@ -22,18 +22,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
         Field::factory()->count(10)->create();
         Doctor::factory(10)->create();
         Item::factory()->count(20)->create();
+        Category::factory()->count(10)->create();
 
-        User::factory()->count(10)->create();
         $this->call(
             [
+                UserSeeder::class,
                 BlogSeeder::class,
-                PassportSeeder::class,
             ]
 
         );
-        Category::factory()->count(10)->create();
     }
 }

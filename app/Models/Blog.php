@@ -9,7 +9,7 @@ class Blog extends Model
 {
     use HasFactory;
     public $fillable = [
-        'title', 'description', 'image'
+        'title', 'description', 'image', 'category_id', 'user_id'
     ];
 
     public function category()

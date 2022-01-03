@@ -48,7 +48,7 @@
                                     <i class="fa fa-eye"></i> Preview
                                 </a>
                             </li>
-                            <li> <a href="#"> <span> <i class="fas fa-edit "></i> </span>Edit</a></li>
+                            <li> <a href=" {{route('blogs.edit',['blog'=>$blog->id])}} "> <span> <i class="fas fa-edit "></i> </span>Edit</a></li>
 
 
                             <li>

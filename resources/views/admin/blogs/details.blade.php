@@ -48,7 +48,7 @@
                                 <td class="head">Action:</td>
                                 <td>
                                     <ul id="preview-action">
-                                        <li> <a href="#"> <span> <i class="fas fa-edit "></i> </span>Edit</a></li>
+                                        <li> <a href="{{route('blogs.edit',[$blog->id])}}"> <span> <i class="fas fa-edit "></i> </span>Edit</a></li>
                                         <li>
                                             <a href="#" onclick="confirmBlogDeleteModal({{$blog->id}})" id="blog-delete-btn"> <i class="fa fa-trash"></i>
                                                 Delete
