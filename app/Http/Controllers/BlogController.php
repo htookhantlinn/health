@@ -95,7 +95,12 @@ class BlogController extends Controller
     {
         $blog = Blog::find($id);
         //
-        return view('admin.blogs.edit', ['blog' => $blog]);
+        if (Gate::allows('delete-blog', $blog)) {
+            return view('admin.blogs.edit', ['blog' => $blog]);
+        } else {
+            Session::put('permission-error-info', 'Permission Denied!!!');
+            return back();
+        }
     }
 
     /**
@@ -108,25 +113,31 @@ class BlogController extends Controller
     public function update(Request $request, $id)
     {
         //
-
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ], [
-            'title.required' => 'Please Fill title Field ',
-            'description.required' => 'Please Fill description Field ',
-            // 'image.required' => 'Please Fill Image Field ',
-        ]);
-
         $blog = Blog::find($id);
-        $blog->title = $request->title;
-        $blog->description = $request->description;
 
-        $blog->save();
-        $blogs = Blog::all();
+        if (Gate::allows('delete-blog', $blog)) {
+            $request->validate([
+                'title' => 'required',
+                'description' => 'required',
+                // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ], [
+                'title.required' => 'Please Fill title Field ',
+                'description.required' => 'Please Fill description Field ',
+                // 'image.required' => 'Please Fill Image Field ',
+            ]);
 
-        return view('admin.blogs.index', ['blogs' => $blogs]);
+            $blog->title = $request->title;
+            $blog->description = $request->description;
+
+            $blog->save();
+            $blogs = Blog::all();
+            Session::put('update-info', 'Record deleted successfully!');
+
+            return view('admin.blogs.index', ['blogs' => $blogs]);
+        } else {
+            Session::put('permission-error-info', 'Permission Denied!!!');
+            return back();
+        }
     }
 
     /**
@@ -137,7 +148,7 @@ class BlogController extends Controller
      */
     public function destroy($id)
     {
-        $user = Auth::user();
+        // $user = Auth::user();
         $blog = Blog::find($id);
         // if ($blog->user->id === $user->id) {
         //     $blog->delete();
