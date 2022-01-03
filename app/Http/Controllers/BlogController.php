@@ -119,14 +119,15 @@ class BlogController extends Controller
         $blog = Blog::find($id);
         if ($blog->user->id === $user->id) {
             $blog->delete();
-            // Session::put('delete-info', 'Record deleted successfully!');    // Set session variable
+            Session::put('delete-info', 'Record deleted successfully!');
 
             return response()->json([
                 'success' => 'Record deleted successfully!',
-                'blogs' => Blog::all(),
             ]);
         } else {
-            // Session::put('permission-error-info', "Yout don't have permission to delete.");    // Set session variable
+            return response()->json([
+                'error' => 'Error',
+            ]);
         }
     }
 }

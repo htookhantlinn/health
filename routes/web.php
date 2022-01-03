@@ -72,9 +72,6 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::resource('/blogs', BlogController::class)->middleware('auth');
 });
 
-
 Route::get('/erm', [ERMController::class, 'display']);
 
 Route::get('/test', [TestController::class, 'index'])->name('users.index');
-
-Route::get('/admin/login', [LoginController::class, 'showLoginForm']);

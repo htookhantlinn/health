@@ -3,6 +3,8 @@
 @section('content')
 <div class="content-wrapper">
     <div class="container p-5">
+
+        {{-- Delete Modal --}}
         <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">

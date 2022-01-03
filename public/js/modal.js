@@ -12,7 +12,7 @@ function confirmBlogDeleteModal(id) {
 function deleteBlog(id) {
     // do your stuffs with id
     var token = $("meta[name='csrf-token']").attr("content");
-    console.log(id);
+
 
     $.ajax({
         type: "DELETE",
@@ -22,13 +22,14 @@ function deleteBlog(id) {
             '_token': token,
         },
         success: function (response) {
-            console.log(response);
-            // toastr.info(response['success'])
+            console.log(response['error']);
 
-            window.location = '/admin/blogs';
+            if (!(response['error'] === 'Error')) {
+                window.location = '/admin/blogs';
+            } else {
+                toastr.error('Permission Denied!!!')
 
-
-
+            }
         }
     });
 

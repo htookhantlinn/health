@@ -112,6 +112,8 @@
     toastr.info("{{Session::get('delete-info')}}")
 
 </script>
+{{Session::forget('delete-info');}}
+
 @endif
 
 
@@ -134,15 +136,12 @@
 </script>
 @endif
 
-@if (Session::has('permission-error-info
-'))
+@if (Session::has('permission-error-info'))
 <script>
-    Toast.fire({
-        icon: 'success'
-        , title: '{{Session::get("permission-error-info")}}'
-    });
+    toastr.error('{{Session::get("permission-error-info")}}')
 
 </script>
+{{Session::forget('permission-error-info');}}
 @endif
 
 
