@@ -25,11 +25,12 @@ class DatabaseSeeder extends Seeder
 
         Field::factory()->count(10)->create();
         Doctor::factory(10)->create();
-        Item::factory()->count(20)->create();
         Category::factory()->count(10)->create();
+        Item::factory()->count(20)->create();
 
         $this->call(
             [
+                RoleSeeder::class,
                 UserSeeder::class,
                 BlogSeeder::class,
             ]

@@ -20,6 +20,7 @@ class UserFactory extends Factory
             'email' => $this->faker->email(),
             'email_verified_at' => now(),
             'mobile' => $this->faker->phoneNumber,
+            'role_id' => rand(1, 3),
             'password' => '$2a$12$Ujlf69qcZTCfvtcLMD5Ug.i8i82FH3fLHpKjVDHNtYjdTLnsiWtGC',
             'remember_token' => Str::random(10),
         ];

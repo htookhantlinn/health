@@ -131,9 +131,9 @@ class BlogController extends Controller
 
             $blog->save();
             $blogs = Blog::all();
-            Session::put('update-info', 'Record deleted successfully!');
+            // Session::put('update-info', 'Record Updated successfully!');
 
-            return view('admin.blogs.index', ['blogs' => $blogs]);
+            return redirect()->route('blogs.index')->with(['blogs' => $blogs, 'update-info' => 'Record Updated successfully!']);
         } else {
             Session::put('permission-error-info', 'Permission Denied!!!');
             return back();

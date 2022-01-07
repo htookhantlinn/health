@@ -48,18 +48,16 @@
                                     <i class="fa fa-eye"></i> Preview
                                 </a>
                             </li>
-                            <li> <a href=" {{route('blogs.edit',['blog'=>$blog->id])}} "> <span> <i class="fas fa-edit "></i> </span>Edit</a></li>
-
+                            <li> <a href=" {{route('blogs.edit',['blog'=>$blog->id])}} "> <span> <i class="fas fa-edit"></i> </span>Edit</a></li>
 
                             <li>
-
                                 <a href="#" onclick="confirmBlogDeleteModal({{$blog->id}})" id="blog-delete-btn">
                                     <i class="fa fa-trash"></i> Delete
                                 </a>
 
-
-
                             </li>
+
+
                         </ul>
 
                     </td>

@@ -124,6 +124,8 @@
     toastr.success("{{Session::get('update-info')}}")
 
 </script>
+{{Session::forget('update-info');}}
+
 @endif
 
 @if (Session::has('create-info'))

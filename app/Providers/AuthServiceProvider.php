@@ -34,6 +34,16 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('update-blog', function (User $user, Blog $blog) {
             return $user->id === $blog->user_id;
         });
+
+        Gate::define('is-Admin', function (User $user) {
+            return $user->role_id == 1;
+        });
+        Gate::define('is-Manager', function (User $user) {
+            return $user->role_id == 2;
+        });
+        Gate::define('is-User', function (User $user) {
+            return $user->role_id == 3;
+        });
         //
     }
 }
